@@ -1,0 +1,18 @@
+* Packages
+node_modules/
+
+* Environment Variables
+.env
+config/
+
+* Compiled files
+dist/
+
+* Logging
+logs/
+
+* Npm debugging
+debug/
+
+* VSCode workspace folder
+.vscode

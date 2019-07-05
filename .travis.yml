@@ -1,0 +1,25 @@
+sudo: false
+language: node_js
+node_js:
+    - lts/*
+cache:
+    - node_modules
+services:
+    - mongodb
+install:
+    - npm install
+script:
+    - npm run build
+    - npm test
+deploy:
+  provider: heroku
+  api_key:
+    secure: 8sAc/9KqKnP5479XtXtTh+Eh/gEZwaU0VoMrcd9dsJNj5RfM4F9qTsVBSUXfUokReJoTomfYl94knUNooclESKBO8frmwX9PJq9edf7FA/Jjj1B9o9UL3dSrG8v2iClMGM7XuNQM/duP1p58aam2ICtZIw9TFJeFlJUKRzOcEEGQiX3spz2HLwOKpHEC4oHRt4o8SL/90IPg1TmRqcysseSQWvDEHVzdDBvPlPzUhW+bmmCBFec/6cXaBiU3xvBfpblOa6h5HhYOzcc3j34zAaonbq9lp8XOmOeTRtfQxWFmogJ7yWgvydsMQmMk0tHhb7tyjFKLJBmcOaROYlbvtW4M+FNVbRUjKMYpOkskxs2rZU8GSCdfDkwHJIPZlotxmV869mGErKItqT5mEL6dAHzgd5C1Nd1yXHImiUSWE8qqdFrLYdGe8mNrXBa4mvfcSRfwD4aEHF39j7Qs9cLeaQwPqkzjq9OK0iZqZteTkyx1dywpcb9fI0QLs9e19YA+dYgmHj4q0yEAJO8MpmORw6GBIavljLcnDOiDQxooDOXfR/92z8nQ8QrqETEokKhvDRyeC8C5/PV0KPYYMyz2Z4QWa2BwD5pb3b0MZdxXfW8yHY+lwcyaFYYaOOBHl77oSS9dNiiYGSRkMmzqcQZAxw0sCL+rWem0UmFZ8oOJJxc=
+  app: coding-domain
+  on:
+    repo: SlimeDevs/task-manager
+env:
+  global:
+  - secure: boZzqpNtfkf3mgJs8mB5SWr/7yB0Wg5VpYZpbvcuh7c0ov+b7TAAy4GNgtHKpl866awjomCh4R9UKgfZaY+XdDzeD1gks/YAhdff/lUkmnmW64I4uZBuxiMA6zO9Ntu40cdwUQ7Uk0KIT3FjrUOBQ5elJ3egjuWU+lQzzBO0iTxCyvoDgQ7bbou05mYdiYF1P0kpMz9M8B0g68R4W+CagI7dRMS5tLrO9r5qnUIu1jBgpPrQfzX1GvQSojTEyxuI9hOeyjfdl7JUjwrEyIoiflvXgR55C3vhG9wXe6px+0Ly84CfP+fjLwUzfmb3i2CWdKlJk3SwX34IJxqH7FjhEtOK+dyJLNXBLzoLNtOcVDNFDFdjBvvmfmPZX4kE3C/vW5ClcCfktkCAFo0H1vQUtK/oqiKLP8wtvTZuAvKBmq4gF1jEGdHNn6aimC5LIAhOlgK8jocqur8OJdeQNYYPUhlTp2vFWZklL+W4sfaIpzhYiF2Bl0XPttr7UYT5E1Nzb6+yM7Eshsv//bms6vuZafg4lbS0qudFmBTDMejgTLpYNJn+goNZCNGJWsq7ZqYRnEc+G+WJ4VjAVWyUU+IZ/r6muwwKt4n8WenS+4qpjXRm9IPlYYfKgT0OCalPKXY5OyK8snqdb0+Bl1bCzxtWvn/QadynWiOIeMrzYbI2rH0=
+  - PORT_TEST=3000
+  - MONGODB_URI_TEST=mongodb://127.0.0.1/task-manager-build
