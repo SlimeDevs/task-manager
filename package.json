@@ -28,7 +28,6 @@
   },
   "homepage": "https://github.com/SlimeDevs/task-app#readme",
   "dependencies": {
-    "@sentry/node": "^5.4.3",
     "bcryptjs": "^2.4.3",
     "ejs": "^2.6.2",
     "express": "^4.17.1",

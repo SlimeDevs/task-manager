@@ -1,4 +1,4 @@
-# Task Manager
+# Task [![Build Status](https://travis-ci.com/SlimeDevs/coding-domain.svg?token=izchRJ4Qx9Twzy5QgRNY&branch=master)](https://travis-ci.com/SlimeDevs/coding-domain) [![dependencies Status](https://david-dm.org/SlimeDevs/task-manager/status.svg)](https://david-dm.org/SlimeDevs/task-manager)
 
 Task Manager is a simple task managing web app using a REST API.
 
