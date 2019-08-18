@@ -4,13 +4,10 @@
   "description": "The source code for my task app",
   "main": "index.js",
   "scripts": {
-    "start": "node dist/index.js",
-    "ts-start": "node -r ts-node/register ./src/index.ts",
-    "build": "tsc",
-    "build-watch": "tsc -w",
-    "dev": "set NODE_ENV=TEST&& nodemon",
-    "test": "set NODE_ENV=TEST&& jest --runInBand --verbose",
-    "prod": "npm run start"
+    "start": "cross-env NODE_ENV=production npm run build && node dist/index.js",
+    "dev": "cross-env NODE_ENV=development nodemon",
+    "test": "cross-env NODE_ENV=test jest --runInBand --verbose",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
@@ -47,6 +44,7 @@
     "@types/mongoose": "^5.5.6",
     "@types/supertest": "^2.0.7",
     "@types/validator": "^10.11.1",
+    "cross-env": "^5.2.0",
     "jest": "^24.8.0",
     "nodemon": "^1.19.1",
     "supertest": "^4.0.2",
@@ -65,7 +63,7 @@
     "watch": [
       "src"
     ],
-    "exec": "npm run ts-start",
+    "exec": "node -r ts-node/register ./src/index.ts",
     "ext": "ts"
   }
 }

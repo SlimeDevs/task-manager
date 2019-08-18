@@ -16,3 +16,6 @@ debug/
 
 * VSCode workspace folder
 .vscode
+
+* Jetbrains configuration
+.idea

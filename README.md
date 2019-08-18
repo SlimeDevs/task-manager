@@ -19,12 +19,9 @@ npm install
 ## Usage
 
 * Compiling code - `npm run build`
-* Compiling code on new changes - `npm run build-watch`
-* Runs nodemon (development) **on typescript files** - `npm run dev`
-* Runs node on js files - `npm run start`
-* Runs node on ts files - `npm run ts-start`
+* Runs local server with hot reloading - `npm run dev`
+* Starts the server in production mode - `npm run start`
 * Runs all tests - `npm run test`
-* Compiles and then runs js code (production) - `npm run prod`
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
