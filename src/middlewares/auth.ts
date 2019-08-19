@@ -3,20 +3,13 @@ import { IUserRequest } from "../interfaces/IUserRequest";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import { User } from "../models/user";
-if (process.env.NODE_ENV !== 'production') {
-	dotenv.config()
-}
+dotenv.config()
 
-const env: string | undefined = process.env.NODE_ENV;
-if (!env) {
-	throw new Error('Environment variables not found')
-}
 
-const envString: string = env.toUpperCase();
-const jwtSecret: string | undefined = process.env["JWT_SECRET_" + envString]
-if (!jwtSecret) {
-	throw new Error('Environment variables not found')
-}
+let {
+    jwtSecret
+}: NodeJS.ProcessEnv = process.env;
+if (!jwtSecret) throw new Error('Environment variables not found')
 
 interface objID {
 	[_id: string]: string

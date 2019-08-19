@@ -13,7 +13,6 @@ env:
   - secure: "JaWKn1ZlpWu5+AgZk7a6bj3lXyZ4WGCHnCpC/ixH6/qqIRvZz1aE49qGLo6MUtgqY8OilwGI3r6ZIUr/eTlbNCB8MqOpHExMgzDlmJN4h969VYerLKlVzdpvLP6DKewWjILLtbMK/qrWXFbXMx+bUkl7TIQEUHXeAl6wjlHQXJt8cVLF8ihS2tpiAB7/x5zjEAUHoN5VbB3p7wlbB+xhNp/7OsdGS93IGpY4RlKtcEMqE0mhOeaUOmAiOhpgXfyhwHqg/spBEdJT4uWzaWd+1sng/2ZqO6Gge1nXn7+Cuz5Gneb0BGq4c7DhULRbtKyYmWq9eACVYdpegb0z+JJXXgZA2JJP2RBpCgZfpXTe9vgTdlxyUN+5x+w66uICBVXZMFNjRc5/BntcPuEpylov9oJ/CQE+qLW5A3I9LfUMt5cMvoB6+O7Ds7SN+5EneWIk2NmmHA1yrDGoRZP3bZTstW6wxl2vsDYmhpuh1BuBnrdy8vMDN4X0JCgBK+klMDJ7XsNbsK22feGmMIzj1iBt7lTFQ2Sr1ZjAJmdVKPgguvcUF/GPEWz92gKgoLY/MNu2s9vXWTmi1Uti+tq13smGszT/t/z+1M5pDL28bXoSu4EROWVAzKk/69eZMYBDja3U6MQstec9lSSpN55O5Vra0d923NAbKiFxKufqDJod/qI="
   - MONGODB_URI=mongodb://127.0.0.1:27017/todos
   - PORT=8080
-  - NODE_ENV=production
 install:
 - npm install
 script:
