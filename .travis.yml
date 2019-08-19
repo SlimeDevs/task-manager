@@ -20,9 +20,9 @@ script:
 - npm test
 before_deploy:
 - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-- docker build -t todo-app .
+- docker build -t todo-api .
 - docker images
-- docker tag todo-app $DOCKER_USERNAME/todo-app
+- docker tag todo-app $DOCKER_USERNAME/todo-api
 deploy:
   provider: script
-  script: docker push $DOCKER_USERNAME/todo-app
+  script: docker push $DOCKER_USERNAME/todo-api
