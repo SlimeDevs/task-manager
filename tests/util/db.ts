@@ -5,16 +5,12 @@ import dotenv from "dotenv"
 import { User } from "../../src/models/user";
 import { ITask } from "../../src/interfaces/ITask";
 import { Task } from "../../src/models/task";
-if (process.env.NODE_ENV !== 'production') {
-	dotenv.config()
-}
+dotenv.config()
 
-const env: string | undefined = process.env.NODE_ENV;
-if (!env) throw new Error('Environment variables not found')
-
-const envString: string = env.toUpperCase();
-const jwtSecret: string | undefined = process.env["JWT_SECRET_" + envString]
-if (!jwtSecret) throw new Error('Environment variables not found')
+let {
+	jwtSecret
+}: NodeJS.ProcessEnv = process.env
+if (!jwtSecret) throw new Error('No jwt secret provided...');
 
 const userOneID: Types.ObjectId = new mongoose.Types.ObjectId();
 const userOne: IUser = {
