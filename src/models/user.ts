@@ -6,16 +6,11 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs"
 import dotenv from "dotenv";
 import { NextFunction } from "express";
-if (process.env.NODE_ENV !== 'production') {
-	dotenv.config()
-}
+if (process.env.NODE_ENV !== 'production') dotenv.config()
 
-const env: string | undefined = process.env.NODE_ENV;
-if (!env) {
-	throw new Error('Environment variables not found')
-}
-const envString: string = env.toUpperCase();
-const jwtSecret: string | undefined = process.env['JWT_SECRET_' + envString];
+let {
+    JWT_SECRET
+}: NodeJS.ProcessEnv = process.env;
 
 export interface IUserModel extends IUser, Document {
     fullName(): string,
@@ -90,12 +85,10 @@ userSchema.methods.toJSON = function(): object {
 };
 
 userSchema.methods.generateAuthToken = async function(): Promise<string> {
-    if (!jwtSecret) {
-        throw new Error("JWT Secret not found.")
-    }
-
+    if (!JWT_SECRET) throw new Error("JWT Secret not found.")
+    
     const user: any = this;
-    const token: string = jwt.sign({ _id: user._id.toString() }, jwtSecret)
+    const token: string = jwt.sign({ _id: user._id.toString() }, JWT_SECRET)
 
     user.tokens = user.tokens.concat({ token })
     await user.save()
