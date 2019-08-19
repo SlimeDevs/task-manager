@@ -48,4 +48,4 @@ Please make sure to update tests as appropriate.
 
 ## License
 
-[AGPL-3.0](https://choosealicense.com/licenses/agpl-3.0/)
+[Apache-2.0](https://choosealicense.com/licenses/apache-2.0/)
