@@ -1,12 +1,12 @@
 sudo: true
 language: node_js
 node_js:
-  - lts/*
+- lts/*
 cache:
-  - node_modules
+- node_modules
 services:
-  - mongodb
-  - docker
+- mongodb
+- docker
 env:
   matrix:
   - secure: HzqqF7OIiPF2Vf4onVGvVnXfFSDwYE+TzDOMI7nSYbqJLBSAcLRFKhRrLfz8u/85PntH6b71p6khKjpVvV+v0tGZiCOgNybjBI9T3zLA8+YQdFPbLaop/4JFJy5s693Hqpny+ntksmbQA8zWYFHidgy9duUM6UWdAEKa6IBGcaD3BXnV48klgvZ/qdPZZai4M+LZunX7yuvphOJJuw9IoseGbSDC/e2NF/Ouhp+ZQkzgSojeZSrKHz1y6lVZw4DKfi1Am2/zZwETtLOe4eOqXpSvLG6Ux9jA6g7BynniQGr3PpizL521++lzvyraWXSV3PwvXlsJm6zpVrWynXZ7nPCdplP6i9mQjd8CvKt7eu7M/hmOg3iG7fK9RtSi3v02WQ+mOgD3ex7rNSijN79joD38q1hH42Pa4lf2Ir81E8Xw7rf/kGhKEIJZQWHPKp95Az/w8/htb9EvFCly1ER/pls31/GAfHhqVmcXeLccJqD3e2UJdiYNDxgPV09B6pTSBhVjcPq+gyZxtOoGDx37rMxlfEwVUpjhiIckGS6c9h5J4s1hMQswYIJvp14mCK9YPyjGxq/l6d/hnt2efAMI7Ck8nvGqLdV3QPCx0W79JoW5ITedO85yWSxRjUC5l4P42lj5PWuKGBeufWJTgxtAlxvXKiDJKzJXtrOtn8N/6MQ=
@@ -14,9 +14,9 @@ env:
   - MONGODB_URI=mongodb://127.0.0.1:27017/todos
   - PORT=8080
 install:
-  - npm install
+- npm install
 script:
-  - npm test
+- npm test
 before_deploy:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker build -t todo-app .
@@ -24,4 +24,4 @@ before_deploy:
   - docker tag todo-app $DOCKER_USERNAME/todo-app
 deploy:
   provider: script
-    script: docker push $DOCKER_USERNAME/todo-app
+  script: docker push $DOCKER_USERNAME/todo-app
