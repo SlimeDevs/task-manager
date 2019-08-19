@@ -1,13 +1,13 @@
-# Task Manager [![Build Status](https://travis-ci.com/brady-miller/task-manager.svg?branch=master)](https://travis-ci.com/brady-miller/task-manager) [![dependencies Status](https://david-dm.org/brady-miller/task-manager/status.svg)](https://david-dm.org/brady-miller/task-manager)
+# Todo API [![Build Status](https://travis-ci.com/brady-miller/todo-api.svg?branch=master)](https://travis-ci.com/brady-miller/todo-api) [![dependencies Status](https://david-dm.org/brady-miller/todo-api/status.svg)](https://david-dm.org/brady-miller/todo-api)
 
-Task Manager is a simple task managing web app using a REST API.
+Todo API is a simple task managing web app using a REST API.
 
 ## Installation
 
 Clone the github repo using git clone
 
 ```bash
-git clone https://github.com/SlimeDevs/task-app.git
+git clone https://github.com/brady-miller/todo-api.git
 ```
 
 Then run npm install to install all needed dependencies
