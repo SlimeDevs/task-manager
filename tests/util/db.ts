@@ -8,9 +8,9 @@ import { Task } from "../../src/models/task";
 dotenv.config()
 
 let {
-	jwtSecret
+	JWT_SECRET
 }: NodeJS.ProcessEnv = process.env
-if (!jwtSecret) throw new Error('No jwt secret provided...');
+if (!JWT_SECRET) throw new Error('No jwt secret provided...');
 
 const userOneID: Types.ObjectId = new mongoose.Types.ObjectId();
 const userOne: IUser = {
@@ -19,7 +19,7 @@ const userOne: IUser = {
 	email: 'Mike@example.com',
 	password: 'mikeTHE123Best',
 	tokens: [{
-		token: jwt.sign({ _id: userOneID }, jwtSecret)
+		token: jwt.sign({ _id: userOneID }, JWT_SECRET)
 	}]
 }
 
@@ -30,7 +30,7 @@ const userTwo: IUser = {
 	email: 'Jffthebest@yahoo.org',
 	password: '123jeffdaduck',
 	tokens: [{
-		token: jwt.sign({ _id: userTwoID }, jwtSecret)
+		token: jwt.sign({ _id: userTwoID }, JWT_SECRET)
 	}]
 }
 
