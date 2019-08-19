@@ -6,12 +6,12 @@
   "scripts": {
     "start": "cross-env NODE_ENV=production npm run build && node dist/index.js",
     "dev": "cross-env NODE_ENV=development nodemon",
-    "test": "cross-env NODE_ENV=test jest --runInBand --verbose",
+    "test": "cross-env NODE_ENV=test tsc && jest --runInBand --verbose",
     "build": "tsc"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SlimeDevs/task-manager.git"
+    "url": "git+https://github.com/brady-miller/task-manager.git"
   },
   "keywords": [
     "tasks",
@@ -21,9 +21,9 @@
   "author": "Brady Miller",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/SlimeDevs/task-app/issues"
+    "url": "https://github.com/brady-miller/task-app/issues"
   },
-  "homepage": "https://github.com/SlimeDevs/task-app#readme",
+  "homepage": "https://github.com/brady-miller/task-app#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "dotenv": "^8.0.0",

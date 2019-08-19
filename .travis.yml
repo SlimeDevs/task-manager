@@ -1,26 +1,27 @@
-sudo: false
+sudo: true
 language: node_js
 node_js:
-- lts/*
+  - lts/*
 cache:
-- node_modules
+  - node_modules
 services:
-- mongodb
-install:
-- npm install
-script:
-- npm run build
-- npm test
-deploy:
-  provider: heroku
-  api_key:
-    secure: hvFo1ovQYLNkDP1emX2FHI37pk8pVjsgeuMawgi3Ei41DoDP2uuJrskAUKB9Z28ZQH0uFz/AKNqc8wcO/jU5esrLTxR6BSioO/0SoUcV4uPMGwssw4xD/PfX3u1ktuwMoG/Rk8nSNUnZefV/sRQ2F1xBSeeUKXsE4IQYzQTAXkayElNhAbzwZzWSNZzZbS7ng1PKiWYajR3pAroJILUFUWgHqjIAhDONK54zxGbogFwbnudRVOQ+FG1KYFbfo7VJ1mbBslMAjtizIlL53FHOvCNDG9OlDZ5DAolP/D5ObHwM6wxBQOfT99iw5pVi1lgn7VTYtaBu8z0RRtafW/KX2mR/e1Q+uAKEBrQ7q8BRKeMZCpLqswmlpN1IIQhXgSw+2JTNHY5yKfjnhX9Frbx4M1NX0xwrxOr2fbzkLVGTIQQ3kNjS7ln4e3x9eQo/U1LMT0GZ1f0US9iV/hyGizB2h2CSOE0VdZugAGG+HGpBFi6mo/81kDqr7E7Ui/GF/RQGMfwc4MGckIM1f4jNUK8748Zmwo0trNnER1cfDFzveX/vWAd5VsZusvp2Mw0X0gajPtIsdlqzs6c4Gaxg38xQpOBtNqtr9wnO/5KjucU5YqX0nKBsblUgPNMxxOZqv9nXxHqqv8IBZoYQkp0qSR1zwVRJR6pcIW61SBr7c3Wywe4=
-  app: coding-domain
-  skip_cleanup: true
-  on:
-    repo: SlimeDevs/task-manager
+  - mongodb
+  - docker
 env:
-  global:
-  - secure: gK7IBjSlWnsatPjBzwCE0fei+3wflFAljolb20WYonfquROk9RIOXPcsixFbRfoGDF4QfFFDgzroyvJAnUTQ+5JhUWc9PUFS4YUqC1NMEL93nxYlDBJVPD3opxbvaUfP2z6RTJ/tJXFslkrX/Yz0C4venOM3QUlmAwS+WO1EUSqVw9qqVEgJlH7RHDFgshGSXK0Z4+6WtuDQrIdVMbyw39PtDK23FwRigRqvDLF60ThFW7TO3Ebb+//H0R0j5OyRU4W+QN7YiidS91p80LwHnvk5CQ2StKlK13soSVVk5nOEV/lo+NR263NVEtjXYSbibjA5ZTjmIoC4eSEhYU/7Kz2uG4r0rabIQmi58V3aiu8BTAqv/7QAs0jOu7w1nrizi5+0jPazWX1XsePnBJ+bojHEmRIqNsj+K5MUsVFRy/hJBulguXfSsO/Az/UOYqTrxQQ9OqL5S8Pcg65o3B+U6buUvY8/JhrVKtwIyM+wMHCtxHqC1IVYXlYMmk6h2y2K9CaKkeNDqO5ti+GykOzBtzdohkFNmbnO4/D+T6z+JehviKycEH1mpsc/gEXTmnwmbyEvs9rPx9UxORVhVf5tqjE+EPBzBc9gYoWB7pv7Fd73rnV3XPgUGluKkX39lS3Bq80MKyP8ScdgUhOpMAV57YAfAyvR/bOgkObtQYrR9Fo=
-  - PORT_TEST=3000
-  - MONGODB_URI_TEST=mongodb://127.0.0.1/task-manager-build
+  matrix:
+  - secure: HzqqF7OIiPF2Vf4onVGvVnXfFSDwYE+TzDOMI7nSYbqJLBSAcLRFKhRrLfz8u/85PntH6b71p6khKjpVvV+v0tGZiCOgNybjBI9T3zLA8+YQdFPbLaop/4JFJy5s693Hqpny+ntksmbQA8zWYFHidgy9duUM6UWdAEKa6IBGcaD3BXnV48klgvZ/qdPZZai4M+LZunX7yuvphOJJuw9IoseGbSDC/e2NF/Ouhp+ZQkzgSojeZSrKHz1y6lVZw4DKfi1Am2/zZwETtLOe4eOqXpSvLG6Ux9jA6g7BynniQGr3PpizL521++lzvyraWXSV3PwvXlsJm6zpVrWynXZ7nPCdplP6i9mQjd8CvKt7eu7M/hmOg3iG7fK9RtSi3v02WQ+mOgD3ex7rNSijN79joD38q1hH42Pa4lf2Ir81E8Xw7rf/kGhKEIJZQWHPKp95Az/w8/htb9EvFCly1ER/pls31/GAfHhqVmcXeLccJqD3e2UJdiYNDxgPV09B6pTSBhVjcPq+gyZxtOoGDx37rMxlfEwVUpjhiIckGS6c9h5J4s1hMQswYIJvp14mCK9YPyjGxq/l6d/hnt2efAMI7Ck8nvGqLdV3QPCx0W79JoW5ITedO85yWSxRjUC5l4P42lj5PWuKGBeufWJTgxtAlxvXKiDJKzJXtrOtn8N/6MQ=
+  - secure: Ym096TmffdQL/WVjeR+D+81nTBBTiLlWKFTLv3Lnj5sTFCzuQlL10MFej/jnvCZr+dHj3TF7eFC2/g/3kTGlVow6G4cX4+sdXCh9oqp7wdV9jcZYIc+7Ou2bbE1sHWIjahYIPF76VSkjcVTVy7/Av8Wl34cq+DNWlevlYXIAuFH/Yl1yD4ToPsYfa5r05dAyXUhq6WcChv2hhMSqXBGq13ojpHk/hv2fW6A3I+K5aCgUiqP3iW4sohqSiciPw5QmV3n72wINXt87Bx1aBccorFigerb2a7SkXwlAiHQLATfV40RFR9zlS/mnJcm4Ss2fE/zybkn+Kx38YLtDP3eUOstO2r/yE8yMGvLsad+vfM8T20OuEsJUAWjbIet7CHIghR7t5gyyqj9jL6hB+nXxg7VreS/WxKkXFAQEYNT4+dIA/WCyXZuGZiXSSBUGwHV9I/G+bOfhkB7hXPZHMcRi10kJTmLhkBjyVb5a30e21ZYp4M5239uLekgUuQHeciyFMNMq1lj0b8mXAhGeMAdQcCTKES7ePNuL9Of+dV0VsS/DjwGiaUSyvCpmk5YEQEx7bmIIvRSq3IyMlpVnQUy0fGRjfgfTS8BxkvW8drbh2gVNtX4OCEcm+3fOZTxvx7JfZbX6RRgpcWwM2IQR0ATXfF5ZXTr6vXdNgAImcdlI5e8=
+  - MONGODB_URI=mongodb://127.0.0.1:27017/todos
+  - PORT=8080
+install:
+  - npm install
+script:
+  - npm test
+before_deploy:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker build -t todo-app .
+  - docker images
+  - docker tag todo-app $DOCKER_USERNAME/todo-app
+deploy:
+  provider: script
+    script: docker push $DOCKER_USERNAME/todo-app
