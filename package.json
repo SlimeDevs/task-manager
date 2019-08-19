@@ -1,8 +1,8 @@
 {
-  "name": "task-manager",
+  "name": "todo-api",
   "version": "0.0.0",
-  "description": "The source code for my task app",
-  "main": "index.js",
+  "description": "A todo app REST API with typescript and express",
+  "main": "/dist/index.js",
   "scripts": {
     "start": "cross-env NODE_ENV=production npm run build && node dist/index.js",
     "dev": "cross-env NODE_ENV=development nodemon",
@@ -11,19 +11,20 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/brady-miller/task-manager.git"
+    "url": "git+https://github.com/brady-miller/todo-api.git"
   },
   "keywords": [
-    "tasks",
-    "task-app",
-    "task-manager"
+    "todos",
+    "todo-api",
+    "todo-app",
+    "todo-manager"
   ],
   "author": "Brady Miller",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/brady-miller/task-app/issues"
+    "url": "https://github.com/brady-miller/todo-api/issues"
   },
-  "homepage": "https://github.com/brady-miller/task-app#readme",
+  "homepage": "https://github.com/brady-miller/todo-api#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "dotenv": "^8.0.0",
