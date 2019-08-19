@@ -7,9 +7,9 @@ dotenv.config()
 
 
 let {
-    jwtSecret
+    JWT_SECRET
 }: NodeJS.ProcessEnv = process.env;
-if (!jwtSecret) throw new Error('Environment variables not found')
+if (!JWT_SECRET) throw new Error('Environment variables not found')
 
 interface objID {
 	[_id: string]: string
@@ -17,12 +17,12 @@ interface objID {
 
 export const auth = async function(req: IUserRequest, res: Response, next: NextFunction): Promise<void> {
     try {
-        if (!jwtSecret) throw new Error('No secret provided')
+        if (!JWT_SECRET) throw new Error('No secret provided')
         const reqHeader: string | undefined = req.header('Authorization');
         if (!reqHeader) throw new Error('User is not logged in');
 
         const token: string = await reqHeader.replace('Bearer ', '');
-        const decoded: objID = await jwt.verify(token, jwtSecret) as objID
+        const decoded: objID = await jwt.verify(token, JWT_SECRET) as objID
 
         const user = await User.findOne({ _id: decoded._id, 'tokens.token': token})
         if (!user) throw new Error('No user found') 
