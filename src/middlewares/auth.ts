@@ -3,20 +3,13 @@ import { IUserRequest } from "../interfaces/IUserRequest";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import { User } from "../models/user";
-if (process.env.NODE_ENV !== 'production') {
-	dotenv.config()
-}
+dotenv.config()
 
-const env: string | undefined = process.env.NODE_ENV;
-if (!env) {
-	throw new Error('Environment variables not found')
-}
 
-const envString: string = env.toUpperCase();
-const jwtSecret: string | undefined = process.env["JWT_SECRET_" + envString]
-if (!jwtSecret) {
-	throw new Error('Environment variables not found')
-}
+let {
+    JWT_SECRET
+}: NodeJS.ProcessEnv = process.env;
+if (!JWT_SECRET) throw new Error('Environment variables not found')
 
 interface objID {
 	[_id: string]: string
@@ -24,12 +17,12 @@ interface objID {
 
 export const auth = async function(req: IUserRequest, res: Response, next: NextFunction): Promise<void> {
     try {
-        if (!jwtSecret) throw new Error('No secret provided')
+        if (!JWT_SECRET) throw new Error('No secret provided')
         const reqHeader: string | undefined = req.header('Authorization');
         if (!reqHeader) throw new Error('User is not logged in');
 
         const token: string = await reqHeader.replace('Bearer ', '');
-        const decoded: objID = await jwt.verify(token, jwtSecret) as objID
+        const decoded: objID = await jwt.verify(token, JWT_SECRET) as objID
 
         const user = await User.findOne({ _id: decoded._id, 'tokens.token': token})
         if (!user) throw new Error('No user found') 

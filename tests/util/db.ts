@@ -5,16 +5,12 @@ import dotenv from "dotenv"
 import { User } from "../../src/models/user";
 import { ITask } from "../../src/interfaces/ITask";
 import { Task } from "../../src/models/task";
-if (process.env.NODE_ENV !== 'production') {
-	dotenv.config()
-}
+dotenv.config()
 
-const env: string | undefined = process.env.NODE_ENV;
-if (!env) throw new Error('Environment variables not found')
-
-const envString: string = env.toUpperCase();
-const jwtSecret: string | undefined = process.env["JWT_SECRET_" + envString]
-if (!jwtSecret) throw new Error('Environment variables not found')
+let {
+	JWT_SECRET
+}: NodeJS.ProcessEnv = process.env
+if (!JWT_SECRET) throw new Error('No jwt secret provided...');
 
 const userOneID: Types.ObjectId = new mongoose.Types.ObjectId();
 const userOne: IUser = {
@@ -23,7 +19,7 @@ const userOne: IUser = {
 	email: 'Mike@example.com',
 	password: 'mikeTHE123Best',
 	tokens: [{
-		token: jwt.sign({ _id: userOneID }, jwtSecret)
+		token: jwt.sign({ _id: userOneID }, JWT_SECRET)
 	}]
 }
 
@@ -34,7 +30,7 @@ const userTwo: IUser = {
 	email: 'Jffthebest@yahoo.org',
 	password: '123jeffdaduck',
 	tokens: [{
-		token: jwt.sign({ _id: userTwoID }, jwtSecret)
+		token: jwt.sign({ _id: userTwoID }, JWT_SECRET)
 	}]
 }
 

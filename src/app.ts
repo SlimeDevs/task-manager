@@ -1,6 +1,5 @@
 import express from "express";
 import path from "path";
-import ejs from "ejs";
 import userRouter from "./routes/user";
 import taskRouter from "./routes/task";
 import "./db/mongoose";
