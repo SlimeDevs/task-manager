@@ -1,6 +1,6 @@
 import { Document, Schema, Model, model } from "mongoose";
 import { IUser } from "../interfaces/IUser";
-import { Task } from "./task"
+import { Todo } from "./todo"
 import validator from "validator";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs"
@@ -19,19 +19,14 @@ export interface IUserModel extends IUser, Document {
 }
 
 export const userSchema: Schema = new Schema({
-    firstName: {
+    username: {
         type: String,
         required: true,
         trim: true
     },
-    lastName: {
-        type: String,
-        required: false,
-        trim: true,
-    },
     email: {
         type: String,
-        required: true,
+        required: false,
         trim: true,
         lowercase: false,
         unique: true,
@@ -41,13 +36,6 @@ export const userSchema: Schema = new Schema({
             }
         }
     },
-    age: {
-        type: Number,
-        required: false,
-        default: 0,
-        min: 0,
-        max: 127
-    },
     password: {
         type: String,
         required: true,
@@ -55,7 +43,7 @@ export const userSchema: Schema = new Schema({
         minlength: 7,
         validate: {
             validator(value: string): boolean {
-                return !value.toLowerCase().includes('password');
+                return !value.toLowerCase().includes('password' || 123);
             }
         }
     },
@@ -68,8 +56,8 @@ export const userSchema: Schema = new Schema({
     }]
 });
 
-userSchema.virtual('tasks', {
-    ref: 'Task',
+userSchema.virtual('todos', {
+    ref: 'Todo',
     localField: '_id',
     foreignField: 'author'
 });
@@ -108,7 +96,7 @@ userSchema.pre('save', async function(next: NextFunction): Promise<void> {
 
 userSchema.pre('remove', async function(next: NextFunction): Promise<void> {
     const user: any = this;
-    await Task.deleteMany({ author: user._id })
+    await Todo.deleteMany({ author: user._id })
     next()
 });
 
