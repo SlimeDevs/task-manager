@@ -3,8 +3,8 @@ import jwt from "jsonwebtoken";
 import { IUser } from "../../src/interfaces/IUser";
 import dotenv from "dotenv"
 import { User } from "../../src/models/user";
-import { ITask } from "../../src/interfaces/ITask";
-import { Task } from "../../src/models/task";
+import { ITodo } from "../../src/interfaces/ITodo";
+import { Todo } from "../../src/models/todo";
 dotenv.config()
 
 let {
@@ -15,7 +15,7 @@ if (!JWT_SECRET) throw new Error('No jwt secret provided...');
 const userOneID: Types.ObjectId = new mongoose.Types.ObjectId();
 const userOne: IUser = {
 	_id: userOneID,
-	firstName: 'Mike',
+	username: 'Mike',
 	email: 'Mike@example.com',
 	password: 'mikeTHE123Best',
 	tokens: [{
@@ -26,7 +26,7 @@ const userOne: IUser = {
 const userTwoID: Types.ObjectId = new mongoose.Types.ObjectId();
 const userTwo: IUser = {
 	_id: userTwoID,
-	firstName: 'Jeff',
+	username: 'Jeff',
 	email: 'Jffthebest@yahoo.org',
 	password: '123jeffdaduck',
 	tokens: [{
@@ -34,35 +34,35 @@ const userTwo: IUser = {
 	}]
 }
 
-const taskOne: ITask = {
+const todoOne: ITodo = {
 	_id: new mongoose.Types.ObjectId(),
-	description: 'First task',
+	title: 'First todo',
 	completed: false,
 	author: userOne._id
 }
 
-const taskTwo: ITask = {
+const todoTwo: ITodo = {
 	_id: new mongoose.Types.ObjectId(),
-	description: 'Second task',
+	title: 'Second todo',
 	completed: true,
 	author: userOne._id
 }
 
-const taskThree: ITask = {
+const todoThree: ITodo = {
 	_id: new mongoose.Types.ObjectId(),
-	description: 'Third task',
+	title: 'Third todo',
 	completed: true,
 	author: userTwo._id
 }
 
 async function setupDb(): Promise<void> {
 	await User.deleteMany({})
-	await Task.deleteMany({})
+	await Todo.deleteMany({})
 	await new User(userOne).save()
 	await new User(userTwo).save()
-	await new Task(taskOne).save()
-	await new Task(taskTwo).save()
-	await new Task(taskThree).save()
+	await new Todo(todoOne).save()
+	await new Todo(todoTwo).save()
+	await new Todo(todoThree).save()
 }
 
 async function closeDb(): Promise<void> {
@@ -74,9 +74,9 @@ export {
 	userTwoID,
 	userOne,
 	userTwo,
-	taskOne,
-	taskTwo,
-	taskThree,
+	todoOne,
+	todoTwo,
+	todoThree,
 	setupDb,
 	closeDb,
 }
