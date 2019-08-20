@@ -1,8 +1,9 @@
 import mongoose from "mongoose";
 
-export interface ITask {
-	_id: any
-    description: string,
+export interface ITodo {
+    _id: any
+    title: string,
+    description?: string,
     completed?: boolean,
     author?: mongoose.Schema.Types.ObjectId
 }

@@ -27,7 +27,7 @@ describe('GET /users/me route (profile)', function(): void {
 describe('POST /users route (signup)', function(): void {
 	test('Should signup a new user', async function(): Promise<void> {
 		const response = await request(app).post('/users').send({
-			firstName: 'Jeff',
+			username: 'Jeff',
 			email: 'Jeff6@example.org',
 			password: 'jeffpass123'
 		}).expect(201);
@@ -37,7 +37,7 @@ describe('POST /users route (signup)', function(): void {
 		expect(user).not.toBeNull()
 		expect(response.body).toMatchObject({
 			user: {
-				firstName: 'Jeff',
+				username: 'Jeff',
 				email: 'Jeff6@example.org',
 			},
 			token: user.tokens[0].token
@@ -92,12 +92,12 @@ describe('PATCH /users/me', function(): void {
 			.patch('/users/me')
 			.set('Authorization', `Bearer ${userOne.tokens[0].token}`)
 			.send({
-				firstName: 'Jess'
+				username: 'Jess'
 			})
 			.expect(200)
 		const user = await User.findById(userOneID)
 		if (!user) throw new Error('No user found')
-		expect(user.firstName).toEqual('Jess')
+		expect(user.username).toEqual('Jess')
 	});
 
 	test('Should not update invalid user fields', async function() {

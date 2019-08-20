@@ -1,12 +1,12 @@
 {
   "name": "todo-api",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "A todo app REST API with typescript and express",
   "main": "/dist/index.js",
   "scripts": {
     "start": "cross-env NODE_ENV=production npm run build && node dist/index.js",
     "dev": "cross-env NODE_ENV=development nodemon",
-    "test": "tsc && jest --runInBand --verbose",
+    "test": "jest --runInBand --verbose",
     "build": "tsc"
   },
   "repository": {

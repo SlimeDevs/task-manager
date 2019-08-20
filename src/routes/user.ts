@@ -93,7 +93,7 @@ router.get('/users/me', auth, async function(req: IUserRequest, res: Response): 
 
 router.patch('/users/me', auth, async function(req: IUserRequest, res: Response): Promise<any> {
 	const updates: string[] = Object.keys(req.body)
-	const allowedUpdates: string[] = ['firstName', 'lastName', 'email', 'password', 'age']
+	const allowedUpdates: string[] = ['username', 'email', 'password']
 	const isValidUpdate: boolean = updates.every((update: string) => allowedUpdates.includes(update))
 
 	if (!isValidUpdate) {
