@@ -33,12 +33,12 @@ npm install
 | POST   | /users/logoutAll | Log out all users (Logout)  | Yes           |
 | GET    | /users/me        | Gets user info (Profile)    | Yes           |
 | PATCH  | /users/me        | Changes user info (Edit)    | Yes           |
-| DELETE | /users/me        | Deletes user/tasks (Delete) | Yes           |
-| POST   | /tasks           | Creates a new task (Create) | Yes           |
-| GET    | /tasks           | Gets all user tasks (View)  | Yes           |
-| GET    | /tasks/:id       | Gets a specific task (View) | Yes           |
-| PATCH  | /tasks/:id       | Edit a specific task (Edit) | Yes           |
-| DELETE | /tasks/:id       | Delete a user task (Delete) | Yes           |
+| DELETE | /users/me        | Deletes user/todos (Delete) | Yes           |
+| POST   | /todos           | Creates a new todo (Create) | Yes           |
+| GET    | /todos           | Gets all user todos (View)  | Yes           |
+| GET    | /todos/:id       | Gets a specific todo (View) | Yes           |
+| PATCH  | /todos/:id       | Edit a specific todo (Edit) | Yes           |
+| DELETE | /todos/:id       | Delete a user todo (Delete) | Yes           |
 
 ## Contributing
 
