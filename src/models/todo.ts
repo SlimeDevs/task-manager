@@ -25,8 +25,8 @@ export const todoSchema: Schema = new Schema({
     priority: {
         type: Number,
         default: 1,
-        min: 1,
-        max: 3,
+        min: [1, 'Priority must be at least 1 (lowest)'],
+        max: [3, 'Priority must be at most 3 (highest)'],
         required: false
     },
     author: {
