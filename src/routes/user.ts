@@ -20,7 +20,6 @@ router.post('/users', async function(req: Request, res: Response): Promise<void>
 
 router.post('/users/login', async function(req: IUserRequest, res: Response): Promise<void> {
     try {
-		console.log(req.body)
 		const user: IUserModel | null = await User.findOne({username: req.body.username})
         if (!user) {
             throw new Error('Either the username or password provided was incorrect')
@@ -34,7 +33,6 @@ router.post('/users/login', async function(req: IUserRequest, res: Response): Pr
 			throw new Error('Either the username or password provided was incorrect')
 		}
     } catch(error) {
-		console.log(error)
         res.status(400).send(error)
     }
 });
