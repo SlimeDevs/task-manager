@@ -13,15 +13,17 @@ router.post('/users', async function(req: Request, res: Response): Promise<void>
 		const token: string = await user.generateAuthToken(); // User is saved in this function
         res.status(201).send({ user: user, token})
     } catch(error) {
+		console.log(error)
         res.status(400).send(error)
     }
 });
 
 router.post('/users/login', async function(req: IUserRequest, res: Response): Promise<void> {
     try {
-		const user: IUserModel | null = await User.findOne({email: req.body.email})
+		console.log(req.body)
+		const user: IUserModel | null = await User.findOne({username: req.body.username})
         if (!user) {
-            throw new Error('Either the email or password provided was incorrect')
+            throw new Error('Either the username or password provided was incorrect')
         }
 		const isMatch: boolean = await bcrypt.compare(req.body.password, user.password)
 
@@ -29,9 +31,10 @@ router.post('/users/login', async function(req: IUserRequest, res: Response): Pr
 			const token = await user.generateAuthToken()
 			res.send({ user, token })
 		} else {
-			throw new Error('Either the email or password provided was incorrect')
+			throw new Error('Either the username or password provided was incorrect')
 		}
     } catch(error) {
+		console.log(error)
         res.status(400).send(error)
     }
 });
@@ -39,11 +42,11 @@ router.post('/users/login', async function(req: IUserRequest, res: Response): Pr
 router.post('/users/logout', auth, async function(req: IUserRequest, res: Response): Promise<void> {
 	try {
         // req.user and req.token is provided by auth middleware
-        if (!req.user || !req.user.tokens) {
+        if (!req.user || !req.token) {
             throw new Error('User is not logged in')
         }
         
-		req.user.tokens = req.user.tokens.filter((token: any) => {
+		await req.user.tokens.filter((token: any) => {
 			return token.token !== req.token
 		})
 		await req.user.save()

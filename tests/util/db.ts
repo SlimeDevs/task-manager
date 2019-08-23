@@ -38,6 +38,7 @@ const todoOne: ITodo = {
 	_id: new mongoose.Types.ObjectId(),
 	title: 'First todo',
 	completed: false,
+	due: new Date(),
 	author: userOne._id
 }
 
@@ -45,6 +46,8 @@ const todoTwo: ITodo = {
 	_id: new mongoose.Types.ObjectId(),
 	title: 'Second todo',
 	completed: true,
+	priority: 3,
+	due: new Date(),
 	author: userOne._id
 }
 
@@ -52,6 +55,8 @@ const todoThree: ITodo = {
 	_id: new mongoose.Types.ObjectId(),
 	title: 'Third todo',
 	completed: true,
+	priority: 2,
+	due: new Date(),
 	author: userTwo._id
 }
 
