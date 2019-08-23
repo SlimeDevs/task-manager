@@ -3,8 +3,18 @@ import { User, IUserModel} from "../models/user";
 import { IUserRequest } from "../interfaces/IUserRequest";
 import { auth } from "../middlewares/auth";
 import bcrypt from "bcryptjs";
+import { runInNewContext } from "vm";
 
 const router = express.Router();
+
+function handleError(res: Response, error: any) {
+	if (error.name === 'ValidationError') {
+		res.status(400).json({error: error.message})
+		return;
+	}
+	res.status(500).send()
+	return;
+}
 
 router.post('/users', async function(req: Request, res: Response): Promise<void> {
     const user: IUserModel = new User(req.body)
@@ -14,7 +24,8 @@ router.post('/users', async function(req: Request, res: Response): Promise<void>
         res.status(201).send({ user: user, token})
     } catch(error) {
 		console.log(error)
-        res.status(400).send(error)
+		handleError(res, error)
+		return;
     }
 });
 
@@ -22,7 +33,8 @@ router.post('/users/login', async function(req: IUserRequest, res: Response): Pr
     try {
 		const user: IUserModel | null = await User.findOne({username: req.body.username})
         if (!user) {
-            throw new Error('Either the username or password provided was incorrect')
+			res.status(401).send({error: 'Either the username or password provided was incorrect'});
+			return;
         }
 		const isMatch: boolean = await bcrypt.compare(req.body.password, user.password)
 
@@ -30,10 +42,13 @@ router.post('/users/login', async function(req: IUserRequest, res: Response): Pr
 			const token = await user.generateAuthToken()
 			res.send({ user, token })
 		} else {
-			throw new Error('Either the username or password provided was incorrect')
+			res.status(401).send({error: 'Either the username or password provided was incorrect'});
+			return;
 		}
     } catch(error) {
-        res.status(400).send(error)
+		console.log(error)
+		handleError(res, error)
+		return;
     }
 });
 
@@ -51,7 +66,8 @@ router.post('/users/logout', auth, async function(req: IUserRequest, res: Respon
 
 		res.send()
 	} catch(error) {
-		res.status(500).send()
+		handleError(res, error)
+		return;
 	}
 });
 
@@ -66,7 +82,8 @@ router.post('/users/logoutAll', auth, async function(req: IUserRequest, res: Res
 
 		res.send()
 	} catch(error) {
-		res.status(500).send()
+		handleError(res, error)
+		return;
 	}
 });
 
@@ -74,7 +91,8 @@ router.get('/users/me', auth, async function(req: IUserRequest, res: Response): 
 	try {
 		res.send(req.user)
 	} catch(error) {
-		res.status(401).send()
+		handleError(res, error)
+		return;
 	}
 });	
 
@@ -113,7 +131,8 @@ router.patch('/users/me', auth, async function(req: IUserRequest, res: Response)
 		await user.save()
 		res.send(user)
 	} catch(error) {
-		res.status(400).send(error)
+		handleError(res, error)
+		return;
 	}
 });
 
@@ -126,7 +145,8 @@ router.delete('/users/me', auth, async function(req: IUserRequest, res: Response
 		await req.user.remove()
 		res.send(req.user)
 	} catch(error) {
-		res.status(500).send()
+		handleError(res, error)
+		return;
 	}
 });
 
