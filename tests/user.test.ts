@@ -49,7 +49,7 @@ describe('POST /users route (signup)', function(): void {
 describe('POST /users/login route (login)', function(): void {
 	test('Should login existing user', async function(): Promise<void> {
 		const response = await request(app).post('/users/login').send({
-			email: userOne.email,
+			username: userOne.username,
 			password: userOne.password
 		}).expect(200);
 
@@ -60,7 +60,7 @@ describe('POST /users/login route (login)', function(): void {
 	
 	test('Should not login nonexistent user', async function(): Promise<void> {
 		await request(app).post('/users/login').send({
-			email: userOne.email,
+			username: userOne.username,
 			password: 'asdhjofpgijsdfiosj'
 		}).expect(400);
 	});

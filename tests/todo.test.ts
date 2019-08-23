@@ -12,7 +12,7 @@ describe('POST /todos (create todo)', function(): void {
 			.post('/todos')
 			.set('Authorization', `Bearer ${userOne.tokens[0].token}`)
 			.send({
-				title: 'From the test suite'
+				title: 'From the test suite',
 			})
 			.expect(201);
 		const todo = await Todo.findById(response.body._id);
@@ -36,7 +36,19 @@ describe('POST /todos (create todo)', function(): void {
 				completed: 3
 			})
 			.expect(400)
-	})
+	});
+
+	test('Should set default priority as 1', async function(): Promise<void> {
+		const response = await request(app)
+			.post('/todos')
+			.set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+			.send({
+				title: 'Test',
+			})
+			const todo = await Todo.findById(response.body._id);
+			if (!todo) throw new Error('Todo not found');
+			expect(todo.priority).toEqual(1);
+	});
 });
 
 describe('GET /todos (view todos)', function(): void {

@@ -54,7 +54,7 @@ router.get('/todos/:id', auth, async function(req: IUserRequest, res: Response):
 
 router.patch('/todos/:id', auth, async function(req: IUserRequest, res: Response): Promise<any> {
 	const updates: string[] = Object.keys(req.body)
-	const allowedUpdates: string[] = ['title', 'description', 'completed']
+	const allowedUpdates: string[] = ['title', 'description', 'completed', 'priority', 'due']
 	const isValidUpdate: boolean = updates.every((update) => allowedUpdates.includes(update))
 
 	if (!isValidUpdate) {
