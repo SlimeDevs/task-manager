@@ -5,6 +5,15 @@ import { auth } from "../middlewares/auth";
 
 const router = express.Router();
 
+function handleError(res: Response, error: any) {
+	if (error.name === 'ValidationError') {
+		res.status(400).json({error: error.message})
+		return;
+	}
+	res.status(500).send()
+	return;
+}
+
 router.post('/todos', auth, async function(req: IUserRequest, res: Response): Promise<void> {
 	if (!req.user) {
 		throw new Error('User is not logged in.')
@@ -19,7 +28,8 @@ router.post('/todos', auth, async function(req: IUserRequest, res: Response): Pr
 		await todo.save()
 		res.status(201).send(todo)
 	} catch(error) {
-		res.status(400).send(error)
+		handleError(res, error)
+		return;
 	}
 });
 
@@ -31,7 +41,8 @@ router.get('/todos', auth, async function(req: IUserRequest, res: Response) {
 		const todos = await Todo.find({author: req.user._id})
 		res.send(todos)
 	} catch(error) {
-		res.status(500).send()
+		handleError(res, error)
+		return;
 	}
 })
 
@@ -48,7 +59,8 @@ router.get('/todos/:id', auth, async function(req: IUserRequest, res: Response):
 		}
 		res.send(todo)
 	} catch(error) {
-		res.status(500).send()
+		handleError(res, error)
+		return;
 	}
 })
 
@@ -74,7 +86,8 @@ router.patch('/todos/:id', auth, async function(req: IUserRequest, res: Response
         await todo.save()
 		res.send(todo)
 	} catch(error) {
-		res.status(400).send(error)
+		handleError(res, error)
+		return;
 	}
 });
 
@@ -91,7 +104,8 @@ router.delete('/todos/:id', auth, async function(req: IUserRequest, res: Respons
 
 		res.send(todo)
 	} catch(error) {
-		res.status(401).send()
+		handleError(res, error)
+		return;
 	}
 })
 
