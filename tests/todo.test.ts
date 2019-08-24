@@ -84,6 +84,28 @@ describe('DELETE /todos/:id (deletes one todo)', function(): void {
 	})
 });
 
+describe('DELETE /todos/all (deletes all todos)', function(): void {
+	test('Should delete all todos from a single user', async function(): Promise<void> {
+		const response = await request(app)
+			.delete('/todos/all')
+			.set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+			.send()
+			.expect(200);
+		const todos = await Todo.find({author: todoOne.author});
+		expect(todos).toStrictEqual([]);
+	});
+
+	test("Should not delete another user's todos", async function(): Promise<void> {
+		await request(app)
+			.delete('/todos/all')
+			.set('Authorization', `Bearer ${userTwo.tokens[0].token}`)
+			.send()
+			.expect(200);
+		const todo = await Todo.find({author: todoThree.author});
+		expect(todo).not.toBeNull()
+	})
+});
+
 describe('PATCH /todos/:id (updates one todo)', function(): void {
 	test('Should update a single user todo', async function(): Promise<void> {
 		await request(app)

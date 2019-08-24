@@ -1,6 +1,7 @@
 import express from "express";
 import path from "path";
 import cors from "cors";
+import helmet from 'helmet';
 import userRouter from "./routes/user";
 import todoRouter from "./routes/todo";
 import "./db/mongoose";
@@ -17,6 +18,8 @@ const corsOptions = {
     }
 }
 
+app.use(helmet())
+app.use(helmet.referrerPolicy({ policy: 'same-origin' }))
 app.set("views", path.join(__dirname, "views"))
 app.set("view engine", "ejs")
 app.use(express.json())
