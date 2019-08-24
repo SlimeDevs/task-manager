@@ -39,6 +39,7 @@ npm install
 | GET    | /todos/:id       | Gets a specific todo (View) | Yes           |
 | PATCH  | /todos/:id       | Edit a specific todo (Edit) | Yes           |
 | DELETE | /todos/:id       | Delete a user todo (Delete) | Yes           |
+| DELETE | /todos/all       | Delete all todos (Delete)   | Yes           |
 
 ## Contributing
 
