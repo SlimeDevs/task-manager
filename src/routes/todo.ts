@@ -10,7 +10,8 @@ function handleError(res: Response, error: any) {
 		res.status(400).json({error: error.message})
 		return;
 	}
-	res.status(500).send()
+	console.log(error)
+	res.status(500).send(error)
 	return;
 }
 
@@ -91,6 +92,26 @@ router.patch('/todos/:id', auth, async function(req: IUserRequest, res: Response
 	}
 });
 
+router.delete('/todos/all', auth, async function(req: IUserRequest, res: Response): Promise<any> {
+	try {
+		console.log('test')
+		if (!req.user) {
+			throw new Error('User is not logged in.')
+		}
+		Todo.deleteMany({ author: req.user._id }, function(error) {
+			if (error) {
+				console.log(error)
+				res.status(500).send({error: 'Could not delete all todos'})
+			}
+		})
+		res.status(200).send()
+	} catch (error) {
+		console.log(error)
+		handleError(res, error)
+		return;
+	}
+});
+
 router.delete('/todos/:id', auth, async function(req: IUserRequest, res: Response): Promise<any> {
 	try {
 		if (!req.user) {
@@ -107,6 +128,8 @@ router.delete('/todos/:id', auth, async function(req: IUserRequest, res: Respons
 		handleError(res, error)
 		return;
 	}
-})
+});
+
+
 
 export default router;
