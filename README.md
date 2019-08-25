@@ -1,4 +1,4 @@
-# Todo API [![Build Status](https://travis-ci.com/brady-miller/todo-api.svg?branch=master)](https://travis-ci.com/brady-miller/todo-api) [![dependencies Status](https://david-dm.org/brady-miller/todo-api/status.svg)](https://david-dm.org/brady-miller/todo-api)
+# Todo API [![Build Status](https://travis-ci.com/brady-miller/todo-api.svg?branch=master)](https://travis-ci.com/brady-miller/todo-api) [![codecov](https://codecov.io/gh/brady-miller/todo-api/branch/master/graph/badge.svg)](https://codecov.io/gh/brady-miller/todo-api) [![dependencies Status](https://david-dm.org/brady-miller/todo-api/status.svg)](https://david-dm.org/brady-miller/todo-api)
 
 Todo API is a simple task managing web app using a REST API.
 
