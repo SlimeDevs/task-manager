@@ -6,5 +6,7 @@ module.exports = {
 	"testPathIgnorePatterns": [
 		"/node_modules/",
 		"/.git/",
-	]
+	],
+	"coverageDirectory": "./coverage/",
+	"collectCoverage": true
 }
