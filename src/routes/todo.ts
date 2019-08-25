@@ -5,6 +5,16 @@ import { auth } from "../middlewares/auth";
 
 const router = express.Router();
 
+function handleError(res: Response, error: any) {
+	if (error.name === 'ValidationError') {
+		res.status(400).json({error: error.message})
+		return;
+	}
+	console.log(error)
+	res.status(500).send(error)
+	return;
+}
+
 router.post('/todos', auth, async function(req: IUserRequest, res: Response): Promise<void> {
 	if (!req.user) {
 		throw new Error('User is not logged in.')
@@ -19,7 +29,8 @@ router.post('/todos', auth, async function(req: IUserRequest, res: Response): Pr
 		await todo.save()
 		res.status(201).send(todo)
 	} catch(error) {
-		res.status(400).send(error)
+		handleError(res, error)
+		return;
 	}
 });
 
@@ -31,7 +42,8 @@ router.get('/todos', auth, async function(req: IUserRequest, res: Response) {
 		const todos = await Todo.find({author: req.user._id})
 		res.send(todos)
 	} catch(error) {
-		res.status(500).send()
+		handleError(res, error)
+		return;
 	}
 })
 
@@ -48,13 +60,14 @@ router.get('/todos/:id', auth, async function(req: IUserRequest, res: Response):
 		}
 		res.send(todo)
 	} catch(error) {
-		res.status(500).send()
+		handleError(res, error)
+		return;
 	}
 })
 
 router.patch('/todos/:id', auth, async function(req: IUserRequest, res: Response): Promise<any> {
 	const updates: string[] = Object.keys(req.body)
-	const allowedUpdates: string[] = ['title', 'description', 'completed']
+	const allowedUpdates: string[] = ['title', 'description', 'completed', 'priority', 'due']
 	const isValidUpdate: boolean = updates.every((update) => allowedUpdates.includes(update))
 
 	if (!isValidUpdate) {
@@ -74,7 +87,28 @@ router.patch('/todos/:id', auth, async function(req: IUserRequest, res: Response
         await todo.save()
 		res.send(todo)
 	} catch(error) {
-		res.status(400).send(error)
+		handleError(res, error)
+		return;
+	}
+});
+
+router.delete('/todos/all', auth, async function(req: IUserRequest, res: Response): Promise<any> {
+	try {
+		console.log('test')
+		if (!req.user) {
+			throw new Error('User is not logged in.')
+		}
+		Todo.deleteMany({ author: req.user._id }, function(error) {
+			if (error) {
+				console.log(error)
+				res.status(500).send({error: 'Could not delete all todos'})
+			}
+		})
+		res.status(200).send()
+	} catch (error) {
+		console.log(error)
+		handleError(res, error)
+		return;
 	}
 });
 
@@ -91,8 +125,11 @@ router.delete('/todos/:id', auth, async function(req: IUserRequest, res: Respons
 
 		res.send(todo)
 	} catch(error) {
-		res.status(401).send()
+		handleError(res, error)
+		return;
 	}
-})
+});
+
+
 
 export default router;

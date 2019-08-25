@@ -12,7 +12,7 @@ describe('POST /todos (create todo)', function(): void {
 			.post('/todos')
 			.set('Authorization', `Bearer ${userOne.tokens[0].token}`)
 			.send({
-				title: 'From the test suite'
+				title: 'From the test suite',
 			})
 			.expect(201);
 		const todo = await Todo.findById(response.body._id);
@@ -36,7 +36,19 @@ describe('POST /todos (create todo)', function(): void {
 				completed: 3
 			})
 			.expect(400)
-	})
+	});
+
+	test('Should set default priority as 1', async function(): Promise<void> {
+		const response = await request(app)
+			.post('/todos')
+			.set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+			.send({
+				title: 'Test',
+			})
+			const todo = await Todo.findById(response.body._id);
+			if (!todo) throw new Error('Todo not found');
+			expect(todo.priority).toEqual(1);
+	});
 });
 
 describe('GET /todos (view todos)', function(): void {
@@ -68,6 +80,28 @@ describe('DELETE /todos/:id (deletes one todo)', function(): void {
 			.send()
 			.expect(404);
 		const todo = await Todo.findById({_id: todoTwo._id});
+		expect(todo).not.toBeNull()
+	})
+});
+
+describe('DELETE /todos/all (deletes all todos)', function(): void {
+	test('Should delete all todos from a single user', async function(): Promise<void> {
+		const response = await request(app)
+			.delete('/todos/all')
+			.set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+			.send()
+			.expect(200);
+		const todos = await Todo.find({author: todoOne.author});
+		expect(todos).toStrictEqual([]);
+	});
+
+	test("Should not delete another user's todos", async function(): Promise<void> {
+		await request(app)
+			.delete('/todos/all')
+			.set('Authorization', `Bearer ${userTwo.tokens[0].token}`)
+			.send()
+			.expect(200);
+		const todo = await Todo.find({author: todoThree.author});
 		expect(todo).not.toBeNull()
 	})
 });

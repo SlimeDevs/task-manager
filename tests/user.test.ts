@@ -27,7 +27,7 @@ describe('GET /users/me route (profile)', function(): void {
 describe('POST /users route (signup)', function(): void {
 	test('Should signup a new user', async function(): Promise<void> {
 		const response = await request(app).post('/users').send({
-			username: 'Jeff',
+			username: 'Jeff6',
 			email: 'Jeff6@example.org',
 			password: 'jeffpass123'
 		}).expect(201);
@@ -37,7 +37,7 @@ describe('POST /users route (signup)', function(): void {
 		expect(user).not.toBeNull()
 		expect(response.body).toMatchObject({
 			user: {
-				username: 'Jeff',
+				username: 'Jeff6',
 				email: 'Jeff6@example.org',
 			},
 			token: user.tokens[0].token
@@ -49,7 +49,7 @@ describe('POST /users route (signup)', function(): void {
 describe('POST /users/login route (login)', function(): void {
 	test('Should login existing user', async function(): Promise<void> {
 		const response = await request(app).post('/users/login').send({
-			email: userOne.email,
+			username: userOne.username,
 			password: userOne.password
 		}).expect(200);
 
@@ -59,10 +59,11 @@ describe('POST /users/login route (login)', function(): void {
 	});
 	
 	test('Should not login nonexistent user', async function(): Promise<void> {
-		await request(app).post('/users/login').send({
-			email: userOne.email,
+		const response = await request(app).post('/users/login').send({
+			username: userOne.username,
 			password: 'asdhjofpgijsdfiosj'
-		}).expect(400);
+		})
+		expect(response.status).toBe(401);
 	});
 });
 

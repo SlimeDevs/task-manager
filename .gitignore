@@ -19,3 +19,6 @@ debug/
 
 * Jetbrains configuration
 .idea
+
+* Coverage folder
+coverage/

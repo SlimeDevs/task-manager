@@ -6,6 +6,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs"
 import dotenv from "dotenv";
 import { NextFunction } from "express";
+import { MongoError } from "mongodb";
 if (process.env.NODE_ENV !== 'production') dotenv.config()
 
 let {
@@ -18,11 +19,16 @@ export interface IUserModel extends IUser, Document {
     generateAuthToken(): Promise<string>
 }
 
+function validatePassword(value: string) {
+    return !value.toLowerCase().includes('password' || 123)
+}
+
 export const userSchema: Schema = new Schema({
     username: {
         type: String,
         required: true,
-        trim: true
+        trim: true,
+        unique: true,
     },
     email: {
         type: String,
@@ -33,18 +39,22 @@ export const userSchema: Schema = new Schema({
         validate: {
             validator(value: string): boolean {
                 return validator.isEmail(value)
-            }
+            },
+            // @ts-ignore
+            message: 'Email is not valid'
         }
     },
     password: {
         type: String,
         required: true,
         trim: true,
-        minlength: 7,
+        minlength: [7, 'Password must be at least 7 characters long'],
         validate: {
-            validator(value: string): boolean {
-                return !value.toLowerCase().includes('password' || 123);
-            }
+            validator(value: string) {
+                return !value.toLowerCase().includes('password' || 123)
+            },
+            // @ts-ignore
+            message: 'Password is too insecure'
         }
     },
     tokens: [{
@@ -99,6 +109,16 @@ userSchema.pre('remove', async function(next: NextFunction): Promise<void> {
     await Todo.deleteMany({ author: user._id })
     next()
 });
+
+userSchema.post('save', function(error: MongoError, doc: IUserModel, next: NextFunction) {
+    if (error.name === 'MongoError' && error.code === 11000) {
+        let duplicateError = new Error('The username and/or email already exist. Please use a different one.');
+        duplicateError.name = "ValidationError"
+        next(duplicateError);
+    } else {
+        next();
+    }
+})
 
 userSchema.methods.fullName = function(): string {
     return (this.firstName.trim() + " " + this.lastName.trim());

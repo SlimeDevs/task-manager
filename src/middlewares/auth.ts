@@ -31,6 +31,6 @@ export const auth = async function(req: IUserRequest, res: Response, next: NextF
         req.user = user;
         next()
     } catch(error) {
-        res.status(401).send({ error: 'Please authenticate.' })
+        res.status(401).send({ error: 'User is not logged in' })
     }
 }

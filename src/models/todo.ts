@@ -18,6 +18,17 @@ export const todoSchema: Schema = new Schema({
         type: Boolean,
         default: false
     },
+    due: {
+        type: Date,
+        required: false
+    },
+    priority: {
+        type: Number,
+        default: 1,
+        min: [1, 'Priority must be at least 1 (lowest)'],
+        max: [3, 'Priority must be at most 3 (highest)'],
+        required: false
+    },
     author: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
