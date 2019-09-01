@@ -7,7 +7,11 @@ import todoRouter from "./routes/todo";
 import "./db/mongoose";
 const app = express();
 
-const whitelist = ['http://localhost:8080', 'http://192.168.10.115', 'http://localhost:3000']
+let {
+    WhitelistURI
+}: NodeJS.ProcessEnv = process.env
+
+const whitelist: (string | undefined)[] = [WhitelistURI]
 const corsOptions = {
     origin: function(origin: any, callback: any) {
         if (whitelist.indexOf(origin) !== -1) {
@@ -23,8 +27,8 @@ app.use(helmet.referrerPolicy({ policy: 'same-origin' }))
 app.set("views", path.join(__dirname, "views"))
 app.set("view engine", "ejs")
 app.use(express.json())
-app.options('*', cors())
-app.use(cors())
+app.use(cors(corsOptions))
+app.options('*', cors(corsOptions))
 app.use(userRouter);
 app.use(todoRouter)
 
