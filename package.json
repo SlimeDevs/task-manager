@@ -1,6 +1,6 @@
 {
   "name": "todo-api",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A todo app REST API with typescript and express",
   "main": "/dist/index.js",
   "scripts": {

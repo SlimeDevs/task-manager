@@ -20,7 +20,8 @@ export const todoSchema: Schema = new Schema({
     },
     due: {
         type: Date,
-        required: false
+        required: false,
+        default: new Date()
     },
     priority: {
         type: Number,
