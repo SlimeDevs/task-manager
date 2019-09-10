@@ -3,7 +3,6 @@ import { User, IUserModel} from "../models/user";
 import { IUserRequest } from "../interfaces/IUserRequest";
 import { auth } from "../middlewares/auth";
 import bcrypt from "bcryptjs";
-import { runInNewContext } from "vm";
 
 const router = express.Router();
 
@@ -23,7 +22,6 @@ router.post('/users', async function(req: Request, res: Response): Promise<void>
 		const token: string = await user.generateAuthToken(); // User is saved in this function
         res.status(201).send({ user: user, token})
     } catch(error) {
-		console.log(error)
 		handleError(res, error)
 		return;
     }
@@ -46,7 +44,6 @@ router.post('/users/login', async function(req: IUserRequest, res: Response): Pr
 			return;
 		}
     } catch(error) {
-		console.log(error)
 		handleError(res, error)
 		return;
     }

@@ -51,7 +51,7 @@ export const userSchema: Schema = new Schema({
         minlength: [7, 'Password must be at least 7 characters long'],
         validate: {
             validator(value: string) {
-                return !value.toLowerCase().includes('password' || 123)
+                return !value.toLowerCase().includes('password')
             },
             // @ts-ignore
             message: 'Password is too insecure'

@@ -44,6 +44,34 @@ describe('POST /users route (signup)', function(): void {
 		})
 		expect(user.password).not.toBe('mikeTHE123Best')
 	});
+
+	test('Should not sign up new user with bad password', async function(): Promise<void> {
+		await request(app).post('/users').send({
+			username: 'george9',
+			email: 'georgethebob@example.org',
+			password: 'goodpassword'
+		}).expect(400);
+
+		await request(app).post('/users').send({
+			username: 'george9',
+			email: 'georgethebob@example.org',
+			password: 'g'
+		}).expect(400);
+
+		const user = await User.find({ username: 'george9' })
+		expect(user).toStrictEqual([]);
+	});
+
+	test('Should not sign up new user with bad email', async function(): Promise<void> {
+		const response = await request(app).post('/users').send({
+			username: 'Jeff6',
+			email: 'bad',
+			password: 'jeffauthentication'
+		}).expect(400);
+
+		const user = await User.find({ username: 'Jeff6' })
+		expect(user).toStrictEqual([]);
+	});
 });
 
 describe('POST /users/login route (login)', function(): void {
